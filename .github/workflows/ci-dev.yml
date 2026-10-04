@@ -1,0 +1,46 @@
+
+    environment:
+      name: Development
+
+    steps:
+
+      ############################################################
+      # CHECKOUT
+      ############################################################
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      ############################################################
+      # CONFIGURE AWS CREDENTIALS
+      ############################################################
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: github-actions-frontend
+
+      ############################################################
+      # VERIFY AWS LOGIN
+      ############################################################
+
+      - name: Verify AWS Identity
+        run: |
+          aws sts get-caller-identity
+
+      ############################################################
+      # DOWNLOAD TERRAFORM STATE
+      ############################################################
+
+      - name: Download Terraform State
+        run: |
+          aws s3 cp \
+            s3://production-dev-frontend-mujammil/frontend/webapp/dev/terraform.tfstate \
+            terraform.tfstate
+
+      ############################################################
+      # LOAD TERRAFORM OUTPUTS
+      ############################################################
+"ci-dev.yml" 92L, 2971B                                                                                                                                                                                             57,89         36%
