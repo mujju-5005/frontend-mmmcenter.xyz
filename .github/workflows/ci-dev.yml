@@ -31,6 +31,10 @@ jobs:
       ############################################################
       # CONFIGURE AWS CREDENTIALS
       ############################################################
+      - name: Check AWS Role Configuration
+        run: |
+          echo "AWS_ROLE_ARN is configured: ${{ secrets.AWS_ROLE_ARN != '' }}"
+          echo "AWS_REGION: ${{ vars.AWS_REGION }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v5
@@ -38,7 +42,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
           role-session-name: github-actions-frontend
-
       ############################################################
       # VERIFY AWS LOGIN
       ############################################################
