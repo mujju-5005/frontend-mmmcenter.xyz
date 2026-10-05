@@ -54,7 +54,7 @@ jobs:
       - name: Download Terraform State
         run: |
           aws s3 cp \
-            s3://production-dev-frontend-mujammil/frontend/webapp/dev/terraform.tfstate \
+            s3://mujammil-bucket/frontend/webapp/dev/terraform.tfstate \
             terraform.tfstate
 
       ############################################################
